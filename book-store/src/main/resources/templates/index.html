@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+ <title th:text="#{header.label.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}"/>
+</head>
+<body>
+<div>
+  <img src="../../images/stsmlogo.png" alt="STSM logo" title="STSM logo"
+       th:src="@{/images/stsmlogo.png}" th:alt-title="#{title.application}"/>
+</div>
+
+<div class="bookstore">
+<div>
+<h1 th:text="#{title.application}">Texto de .properties</h1>  
+        <tr th:if="${listBooks.empty}">									<!-- listBooks obj. en GetMapping -->
+       		<td th:text="#{welcome.message} + ' ' + ' !'" />
+      		<td colspan="3" th:text="#{books.available}"> Not available books</td>
+      		<td><a th:href="@{/add/0}">Add book, no books</a></td>
+       </tr>
+ </div>
+  <div class="bookstore" th:unless="${#lists.isEmpty(allBooks)}">	<!-- allBooks is @ ModelAttribute consult -->
+			<table  class="table">
+				<thead>
+					<tr>
+ 						<th th:text="#{bookstore.form.title}"> Títle </th>
+ 						<th th:text="#{bookstore.form.isbn}"> Isbn </th>
+ 						<th th:text="#{bookstore.form.author}"> Author </th>
+ 						<th th:text="#{bookstore.form.editorial}"> Editorial </th>
+ 						<th th:text="#{bookstore.form.publishedDate}">Published date </th>
+ 						<th th:text="#{bookstore.form.price}"> Price </th>
+ 						<th th:text="#{bookstore.form.onSale}"> On sale </th>
+ 						<th colspan="2"><a class="enlaceboton" th:href="@{/add/0}">Agregar</a></th>
+ 					
+					</tr>
+				</thead>
+				<tbody>
+				 <tr th:each="obj : ${listBooks}">
+					<td th:text="${obj.title}">La Celestina</td>
+					<td th:text="${obj.isbn}">56r45456-34TR</td>
+ 					<td th:text="${obj.author}">Fernando de Rojas</td>
+ 					<td th:text="#{${'book.editorial.' + obj.editorial}}">Aguilar</td>
+					<td th:text="${{obj.publishedDate}}">21/12/1652</td>
+ 					<td th:text="${obj.price}">5.50</td>
+					<td th:text="#{|bool.${obj.onSale}|}">yes</td>
+ 					<!--  <td><a class="enlaceboton" th:href="@{/edit/} + ${obj.id}">View</a></td> -->
+ 					<td><a class="enlaceboton" th:text="#{bookstore.form.modify}" 
+ 											   th:href="@{/edit/{id}(id=${obj.id})}">Modify</a></td> 
+ 					<td><a class="enlaceboton" th:text="#{bookstore.form.delete}" 
+ 											   th:href="@{/delete/{id}(id=${obj.id})}">Delete</a></td> 
+ 				</tr>
+ 			 </tbody>
+		</table>
+		</div>
+	</div>
+</body>
+</html>

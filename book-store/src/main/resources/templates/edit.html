@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title th:text="#{header.label.title}">Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}"/>
+</head>
+<body>
+<div>
+  <img src="../../images/stsmlogo.png" alt="STSM logo" title="STSM logo"
+       th:src="@{/images/stsmlogo.png}" th:alt-title="#{title.application}"/>
+</div>
+<div>
+
+
+<form action="#" th:action="@{/changeBook}" th:object="${book}" method="post">
+	<fieldset>
+		<legend th:text="#{bookstore.form.header}">"Datos del Libro</legend>
+	  	<div th:object="${book}" th:remove="tag">
+    <ul th:if="${#fields.hasErrors('*')}"  class="errorlist">
+        <li th:each="error : ${#fields.errors('*')}" th:text="${error}">Input is incorrect</li>
+    </ul>  
+    </div>  
+       	
+       	<div> <input type="hidden" th:field="*{id}" /> </div>
+      	<div>
+      	   <label th:text="#{bookstore.form.title}"> Títle </label>
+            <input type="text" th:field="*{title}" th:errorclass="fieldError"/> 
+      	</div>
+      	<div class="alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</div>
+      	<div>
+      		<label th:text="#{bookstore.form.isbn}"> Isbn </label>
+            <input type="text"  readonly="true" th:field="${book.isbn}" th:errorclass="fieldError"/>
+      	</div>
+      	<div class="alert-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Name Error</div>
+      	<div>
+      		<label th:text="#{bookstore.form.author}"> Author </label>
+             <input type="text" th:field="*{author}" th:errorclass="fieldError"/>
+     	<div class="alert-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Name Error</div>
+      	</div>
+      	<div>
+      		<label for="editorial" th:text="#{bookstore.form.editorial}">Texto de .properties</label>
+             <select th:field="*{editorial}"> <option 
+            		th:each="editorial : ${allEditorials}" 
+         		    th:value="${editorial}" 
+          			th:text="#{${'book.editorial.' + editorial}}">Editorial</option>
+			</select>     	
+      	</div>
+      	<div>
+        	<label for="publishedDate"> <span th:text="#{bookstore.form.publishedDate}">Published date</span>
+        	</label>
+       		 <input type="text" th:field="*{publishedDate}" th:errorclass="fieldError" />
+      	</div>
+      	<div>
+      	    <label th:text="#{bookstore.form.price}"> Price </label>
+              <input type="number" step="0.1" th:field="${book.price}" th:errorclass="fieldError"/>
+      	</div>
+      	<div class="alert-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Name Error</div>
+      	<div>
+      	     <label th:text="#{bookstore.form.onSale}"> On sale </label>
+              <input type="checkbox" th:field="*{onSale}" th:errorclass="fieldError"/></td>
+      	</div>
+       	<div class="submit">
+      			<button type="submit"  th:text="#{bookstore.form.send}">Send data</button>
+      			<a class="enlaceboton" th:href="@{/}">Cancelar</a>
+      	</div>
+    </fieldset>
+</form>
+</div>
+</body>
+</html>
