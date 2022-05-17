@@ -1,0 +1,19 @@
+#####################################################################
+#https://stackoverflow.com/questions/67695069/spring-boot-datasource-initialization-error-with-data-sql-script-after-2-5-0-upg
+#Spring Boot has modified how it initializes the DataSource with SQL scripts with 2.5.0.
+#Esta propiedad soluciona el problema
+######################################################################
+spring:
+  jpa:
+    defer-datasource-initialization: true
+#########################
+#
+#Application Configuration
+#
+#############################
+server:
+  port: 8091
+  error:
+    include-message: always
+    include-binding-errors: always
+
